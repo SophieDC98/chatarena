@@ -161,6 +161,7 @@ class ArenaCLI:
 
             # The messages that are not yet logged
             messages = [msg for msg in env.get_observation() if not msg.logged]
+            human_players = [player.name for player in self.arena.players if player.backend.type_name == "human"]
             # Print the new messages
             for msg in messages:
                 message_text = Text(
@@ -171,6 +172,9 @@ class ArenaCLI:
                     0,
                     len(f"[{msg.agent_name}->{msg.visible_to}]:"),
                 )
+                # if (msg.visible_to=="all" or 
+                #     (all([human in msg.visible_to for human in human_players]) 
+                #     and len(human_players))):
                 console.print(message_text)
                 msg.logged = True
 
