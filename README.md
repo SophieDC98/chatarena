@@ -58,7 +58,7 @@ pip install chatarena
 or install from source:
 
 ```bash
-pip install git+https://github.com/chatarena/chatarena
+pip install git+https://github.com/SophieDC98/chatarena
 ```
 
 To use GPT-3 as an LLM agent, set your OpenAI API key:
