@@ -146,11 +146,12 @@ class FindHuman(Environment):
             else:
                 self._next_player_idx = 0
                 self._current_round += 1
-                self._current_phase = "accuse" if self._current_round == self.rounds else "ask questions"
-                self._moderator_speak(
-                    "Now vote which of the other players (excluding yourself) is the human. "
-                    "You cannot vote for yourself."
-                )
+                if self._current_round == self.rounds:
+                    self._current_phase = "accuse"
+                    self._moderator_speak(
+                        "Now vote which of the other players (excluding yourself) is the human. "
+                        "You cannot vote for yourself."
+                    )
                 self._current_turn += 1
 
             timestep = TimeStep(
