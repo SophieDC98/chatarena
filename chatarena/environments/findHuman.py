@@ -12,15 +12,16 @@ class FindHuman(Environment):
 
     def __init__(
         self,
-        human_player,
+        human_player: str,
         player_names: List[str],
+        rounds: int = 3,
         **kwargs,
     ):
         super().__init__(player_names=player_names, **kwargs)
 
         # The "state" of the environment is maintained by the message pool
         self.message_pool = MessagePool()
-
+        self.rounds = rounds
         self.human_name = human_player
 
         # Game states
@@ -39,6 +40,7 @@ class FindHuman(Environment):
     def reset(self):
         """Reset the game"""
         self._current_turn = 0
+        self._current_round = 0
         self._next_player_idx = 0
         self._current_phase = "ask questions"
 
@@ -49,6 +51,7 @@ class FindHuman(Environment):
             f"You cannot repeat what others has said. We will start with {self.player_names[0]}."
         )
         self._current_turn = 1
+        self._current_round = 0
 
         self._players_votes = {name: 0 for name in self.player_names}
 
@@ -114,7 +117,7 @@ class FindHuman(Environment):
         ):
             return True
 
-    def step(self, player_name: str, action: str, max_steps) -> TimeStep:
+    def step(self, player_name: str, action: str) -> TimeStep:
         """
         Step function that is called by the arena.
 
@@ -142,7 +145,8 @@ class FindHuman(Environment):
                 self._next_player_idx += 1
             else:
                 self._next_player_idx = 0
-                self._current_phase = "accuse" if self._current_turn == max_steps-1 else "ask questions"
+                self._current_round += 1
+                self._current_phase = "accuse" if self._current_round == self.rounds else "ask questions"
                 self._moderator_speak(
                     "Now vote which of the other players (excluding yourself) is the human. "
                     "You cannot vote for yourself."
