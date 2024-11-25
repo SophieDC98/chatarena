@@ -5,7 +5,8 @@ from .cohere import CohereAIChat
 from .hf_transformers import TransformersConversational
 from .human import Human
 from .openai import OpenAIChat
-
+from .gemini import GeminiChat
+from .azure_openai import AzureChatOpenAI
 
 # Load a backend from a config dictionary
 def load_backend(config: BackendConfig):
