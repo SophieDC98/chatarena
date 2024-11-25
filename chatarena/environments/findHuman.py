@@ -190,16 +190,21 @@ class FindHuman(Environment):
                     accuse_correct = False
 
                 if not accuse_correct:
-                    if even_vote:
+                    if not len(self.human_name):
                         self._moderator_speak(
-                            f"There are even votes. The accusation does not stand. "
-                            f"{self.human_name} is the human. {self.human_name} won the game!"
+                            "HAHA got you! There was no human in this chat!"
                         )
                     else:
-                        self._moderator_speak(
-                            f"The most-voted player is {max_vote_player}. The accusation is incorrect. "
-                            f"{self.human_name} is the human. {self.human_name} won the game!"
-                        )
+                        if even_vote:
+                            self._moderator_speak(
+                                f"There are even votes. The accusation does not stand. "
+                                f"{self.human_name} is the human. {self.human_name} won the game!"
+                            )
+                        else:
+                            self._moderator_speak(
+                                f"The most-voted player is {max_vote_player}. The accusation is incorrect. "
+                                f"{self.human_name} is the human. {self.human_name} won the game!"
+                            )
                     rewards = self.get_rewards(human_win=True)
                     terminal = True
                 else:
