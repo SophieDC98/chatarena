@@ -90,6 +90,7 @@ class OpenAIChat(IntelligenceBackend):
             azure_endpoint = os.environ.get("AZURE_ENDPOINT"),
             openai_api_key = os.environ.get("OPENAI_KEY"),
             openai_api_version = os.environ.get("OPENAI_API_VERSION"),
+            max_tokens=self.max_tokens
         )
         response = completion.invoke(messages).content
         response = response.strip()
